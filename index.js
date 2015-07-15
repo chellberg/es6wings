@@ -1,3 +1,5 @@
+/* global $ document console */
+
 $( document ).ready( () => {
   $('form').on('submit', handleSubmit)
 })
@@ -6,9 +8,19 @@ const handleSubmit = e => {
     e.preventDefault()
     const totalPrice = $('input#price').val()
     const wingCount = $('input#count').val()
-    console.log(`Price per wing: ${pricePerWing(totalPrice, wingCount)}`)
+    const wingCalc = new WingCalculator(totalPrice, wingCount)
+
+    console.log(`Price per wing: ${wingCalc.pricePerWing()}`)
 }
 
-const pricePerWing = (total, count) => {
-  return (+total / +count)
+
+class WingCalculator {
+  constructor(totalPrice, wingCount) {
+    this.totalPrice = totalPrice
+    this.wingCount = wingCount
+  }
+
+  pricePerWing() {
+    return (+this.totalPrice / +this.wingCount)
+  }
 }
